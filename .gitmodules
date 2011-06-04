@@ -1,0 +1,9 @@
+[submodule "framework"]
+	path = framework
+	url = git://github.com/rpetrich/theos.git
+[submodule "Localization"]
+	path = Localization
+	url = git://github.com/rpetrich/Localization.git
+[submodule "newsyc"]
+	path = newsyc
+	url = git://github.com/newsyc/newsyc.git

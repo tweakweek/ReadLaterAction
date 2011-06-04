@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>ReadLater</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.booleanmagic.ActionMenu</string>
+			<key>key</key>
+			<string>AMPluginEnabled-ReadLater</string>
+			<key>label</key>
+			<string>Enabled</string>
+			<key>PostNotification</key>
+			<string>com.booleanmagic.ActionMenu.settingschange</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Instapaper Account</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.rpetrich.readlater</string>
+			<key>key</key>
+			<string>RLLogin</string>
+			<key>isEmail</key>
+			<true/>
+			<key>placeholder</key>
+			<string>Login</string>
+			<key>PostNotification</key>
+			<string>com.rpetrich.readlater.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSecureEditTextCell</string>
+			<key>defaults</key>
+			<string>com.rpetrich.readlater</string>
+			<key>key</key>
+			<string>RLPassword</string>
+			<key>placeholder</key>
+			<string>Password</string>
+			<key>PostNotification</key>
+			<string>com.rpetrich.readlater.settingschanged</string>
+		</dict>
+	</array>
+</dict>
+</plist>

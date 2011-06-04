@@ -1,0 +1,9 @@
+Package: com.rpetrich.readlateraction
+Priority: optional
+Section: Tweaks
+Architecture: iphoneos-arm
+Version: 0.1
+Description: Submit articles to Instapaper via Action Menu
+Name: Read Later Action
+Depends: firmware (>= 4.0), mobilesubstrate, actionmenu
+Author: Ryan Petrich <rpetrich+readlateraction@gmail.com>
