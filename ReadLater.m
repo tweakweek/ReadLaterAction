@@ -55,8 +55,17 @@ static inline void Alert(NSString *message)
 		// Add the item with specified URL
 		WebThreadLock();
 		WebFrame *webFrame = [self _focusedOrMainFrame];
+		// Use selection for summary text
+		NSString *selection = [self selectedTextualRepresentation];
+		// If selection equals all then set to nil (probably nothing was selected)
+		if ([selection isEqualToString:[self textualRepresentation]]) selection = nil;
+		// Truncate length of summary (Instapaper shows upto 200 chars in main list)
+		#define LEN 500
+		selection = [selection length] <= LEN ? selection :
+					[[selection substringToIndex:LEN] stringByAppendingString:@".."];
 		[request addItemWithURL:[NSURL URLWithString:[webFrame stringByEvaluatingJavaScriptFromString:@"location.href" forceUserGesture:NO]]
-		                  title:[webFrame stringByEvaluatingJavaScriptFromString:@"document.title" forceUserGesture:NO]];
+						  title:[webFrame stringByEvaluatingJavaScriptFromString:@"document.title" forceUserGesture:NO]
+						  selection:selection];
 		WebThreadUnlock();
 		[request release];
 	}
