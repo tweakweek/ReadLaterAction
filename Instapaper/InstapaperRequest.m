@@ -76,7 +76,7 @@ static inline NSString *URLEncode(NSString *string)
     query = [query stringByAppendingFormat:@"username=%@&", URLEncode(username)];
     if (password != nil && [password length] > 0) query = [query stringByAppendingFormat:@"password=%@&", URLEncode(password)];
     if (title != nil && [title length] > 0) query = [query stringByAppendingFormat:@"title=%@&", URLEncode(title)];
-    if (selection != nil && [selection length] > 0) query = [query stringByAppendingFormat:@"&title=%@&", URLEncode(selection)];
+    if (selection != nil && [selection length] > 0) query = [query stringByAppendingFormat:@"&selection=%@&", URLEncode(selection)];
     query = [query stringByAppendingFormat:@"url=%@&", URLEncode([url absoluteString])];
     
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:kInstapaperAPIAddItemURL] autorelease];
