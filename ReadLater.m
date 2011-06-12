@@ -36,6 +36,8 @@ static inline void Alert(NSString *message)
 	return [URL hasPrefix:@"http://"] || [URL hasPrefix:@"https://"];
 }
 
+static NSString *selection = nil;
+
 - (void)performReadLaterAction:(id)sender
 {
 	// Load Settings
@@ -55,8 +57,19 @@ static inline void Alert(NSString *message)
 		// Add the item with specified URL
 		WebThreadLock();
 		WebFrame *webFrame = [self _focusedOrMainFrame];
+		// Use selection for summary text
+		selection = [self selectedTextualRepresentation];
+		// If selection equals all then set to nil (probably nothing was selected)
+		if ([selection isEqualToString:[self textualRepresentation]]) selection = nil;
+		// Truncate length of summary (Instapaper shows upto 200 chars in main list)
+		#define LEN 500
+		selection = [selection length] <= LEN ? selection :
+					[[selection substringToIndex:LEN] stringByAppendingString:@".."];
+		// Retain to use in alert
+		[selection retain];
 		[request addItemWithURL:[NSURL URLWithString:[webFrame stringByEvaluatingJavaScriptFromString:@"location.href" forceUserGesture:NO]]
-		                  title:[webFrame stringByEvaluatingJavaScriptFromString:@"document.title" forceUserGesture:NO]];
+						  title:[webFrame stringByEvaluatingJavaScriptFromString:@"document.title" forceUserGesture:NO]
+						  selection:selection];
 		WebThreadUnlock();
 		[request release];
 	}
@@ -64,12 +77,16 @@ static inline void Alert(NSString *message)
 
 + (void)readLaterActionSucceeded:(NSNotification *)notification
 {
-	Alert(@"Link submitted to Instapaper.");
+	NSString *summary = @".\n\nSummary as follows:\n\"%@\"";
+	summary = selection ? [NSString stringWithFormat:summary, selection] : nil;
+	Alert([@"Link submitted to Instapaper" stringByAppendingString:summary ?: @"."]);
+	[selection release];
 }
 
 + (void)readLaterActionFailed:(NSNotification *)notification
 {
 	Alert([[notification.userInfo objectForKey:@"error"] localizedDescription]);
+	[selection release];
 }
 
 + (void)load
